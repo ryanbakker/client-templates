@@ -12,14 +12,12 @@ import {
   FieldGroup,
   FieldLabel,
   FieldLegend,
-  FieldSeparator,
   FieldSet,
 } from "@/components/ui/field";
 
 import { useForm, ValidationError } from "@formspree/react";
 
 const Contact = () => {
-  // Replace with your real Formspree form ID
   const [state, handleSubmit] = useForm("YOUR_FORMSPREE_FORM_ID");
 
   return (
@@ -27,221 +25,141 @@ const Contact = () => {
       <div className="container pt-16 pb-24">
         <SectionHeader
           heading="Request a Quote"
-          subheading="Tell us about your job and we’ll get back to you as soon as we can"
+          subheading="Tell us about your job and we’ll get back to you promptly"
           variant="light"
         />
 
-        <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1.2fr)] items-start">
-          {/* Left: Form */}
-          <div>
-            <form
-              onSubmit={handleSubmit}
-              className="rounded-2xl border border-primary/10 bg-white/80 px-6 py-7 sm:px-8 sm:py-8 shadow-[0_10px_35px_rgba(0,0,0,0.06)] backdrop-blur-sm"
-            >
-              <FieldSet>
-                <FieldLegend className="text-sm font-semibold text-primary">
-                  Contact details
-                </FieldLegend>
-                <FieldDescription className="text-xs text-dark/60 mb-4">
-                  Share a few details so we can get back to you with the right
-                  information.
-                </FieldDescription>
+        <div className="mt-2 flex justify-center">
+          <form
+            onSubmit={handleSubmit}
+            className="
+              relative w-full max-w-3xl
+              rounded-2xl border border-primary/10 bg-white/95
+              shadow-[0_10px_30px_rgba(0,0,0,0.06)] backdrop-blur-lg
+              px-6 py-8 sm:px-7 sm:py-9 overflow-hidden
+            "
+          >
+            <span className="pointer-events-none absolute inset-x-0 top-0 h-1.5 rounded-t-2xl bg-accent/80" />
 
-                <FieldGroup className="space-y-4">
-                  {/* Name + Email */}
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <Field
-                      data-invalid={
-                        !!state.errors?.find((e) => e.field === "name")
-                      }
-                    >
-                      <FieldLabel
-                        htmlFor="contact-name"
-                        className="text-xs font-semibold text-primary"
-                      >
-                        Name
-                      </FieldLabel>
-                      <Input
-                        id="contact-name"
-                        name="name"
-                        placeholder="Your name"
-                        className="text-sm"
-                        required
-                      />
-                      <FieldError className="text-xs">
-                        <ValidationError
-                          prefix="Name"
-                          field="name"
-                          errors={state.errors}
-                        />
-                      </FieldError>
-                    </Field>
+            <FieldSet>
+              <FieldLegend className="text-lg sm:text-xl font-semibold text-primary mt-1">
+                Contact Details
+              </FieldLegend>
 
-                    <Field
-                      data-invalid={
-                        !!state.errors?.find((e) => e.field === "email")
-                      }
-                    >
-                      <FieldLabel
-                        htmlFor="contact-email"
-                        className="text-xs font-semibold text-primary"
-                      >
-                        Email
-                      </FieldLabel>
-                      <Input
-                        id="contact-email"
-                        name="email"
-                        type="email"
-                        placeholder="you@example.com"
-                        className="text-sm"
-                        required
-                      />
-                      <FieldError className="text-xs">
-                        <ValidationError
-                          prefix="Email"
-                          field="email"
-                          errors={state.errors}
-                        />
-                      </FieldError>
-                    </Field>
-                  </div>
+              <FieldDescription className="mt-1 mb-6 text-sm text-dark/65 leading-relaxed">
+                We’ll use these details to respond with a quote or follow-up
+                questions.
+              </FieldDescription>
 
-                  {/* Phone + Subject */}
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <Field
-                      data-invalid={
-                        !!state.errors?.find((e) => e.field === "phone")
-                      }
-                    >
-                      <FieldLabel
-                        htmlFor="contact-phone"
-                        className="text-xs font-semibold text-primary"
-                      >
-                        Phone (optional)
-                      </FieldLabel>
-                      <Input
-                        id="contact-phone"
-                        name="phone"
-                        placeholder="Mobile or landline"
-                        className="text-sm"
-                      />
-                      <FieldError className="text-xs">
-                        <ValidationError
-                          prefix="Phone"
-                          field="phone"
-                          errors={state.errors}
-                        />
-                      </FieldError>
-                    </Field>
-
-                    <Field
-                      data-invalid={
-                        !!state.errors?.find((e) => e.field === "subject")
-                      }
-                    >
-                      <FieldLabel
-                        htmlFor="contact-subject"
-                        className="text-xs font-semibold text-primary"
-                      >
-                        Subject
-                      </FieldLabel>
-                      <Input
-                        id="contact-subject"
-                        name="subject"
-                        placeholder="E.g. switchboard upgrade, new lighting"
-                        className="text-sm"
-                        required
-                      />
-                      <FieldError className="text-xs">
-                        <ValidationError
-                          prefix="Subject"
-                          field="subject"
-                          errors={state.errors}
-                        />
-                      </FieldError>
-                    </Field>
-                  </div>
-
-                  <FieldSeparator />
-
-                  {/* Message */}
-                  <Field
-                    data-invalid={
-                      !!state.errors?.find((e) => e.field === "message")
-                    }
-                  >
-                    <FieldLabel
-                      htmlFor="contact-message"
-                      className="text-xs font-semibold text-primary"
-                    >
-                      Job details
+              <FieldGroup className="space-y-1">
+                {/* Name + Email */}
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Field>
+                    <FieldLabel className="text-sm font-medium text-dark">
+                      Name
                     </FieldLabel>
-                    <FieldDescription className="text-xs text-dark/60">
-                      Include your suburb, type of work, and any timing or
-                      access details. Photos are helpful when you email us
-                      later.
-                    </FieldDescription>
-                    <Textarea
-                      id="contact-message"
-                      name="message"
-                      placeholder="Tell us what you need done..."
-                      className="min-h-[130px] resize-y text-sm"
+                    <Input
+                      name="name"
+                      placeholder="Your name"
+                      className="h-10 text-sm"
                       required
                     />
-                    <FieldError className="text-xs">
-                      <ValidationError
-                        prefix="Message"
-                        field="message"
-                        errors={state.errors}
-                      />
+                    <FieldError className="text-xs text-red-500">
+                      <ValidationError field="name" errors={state.errors} />
                     </FieldError>
                   </Field>
 
-                  <FieldSeparator />
-
-                  {/* Actions */}
-                  <Field
-                    orientation="horizontal"
-                    className="items-center justify-between"
-                  >
-                    <Button
-                      type="submit"
-                      disabled={state.submitting}
-                      className="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white hover:bg-accent/90"
-                    >
-                      {state.submitting ? "Sending..." : "Send enquiry"}
-                    </Button>
-
-                    {state.succeeded && (
-                      <FieldDescription className="text-xs text-primary/80">
-                        Thanks — your message has been sent. We’ll be in touch
-                        soon.
-                      </FieldDescription>
-                    )}
+                  <Field>
+                    <FieldLabel className="text-sm font-medium text-dark">
+                      Email
+                    </FieldLabel>
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      className="h-10 text-sm"
+                      required
+                    />
+                    <FieldError className="text-xs text-red-500">
+                      <ValidationError field="email" errors={state.errors} />
+                    </FieldError>
                   </Field>
-                </FieldGroup>
-              </FieldSet>
-            </form>
-          </div>
+                </div>
 
-          {/* Right: Info / reassurance */}
-          <div className="space-y-5 text-sm sm:text-base text-dark/70">
-            <p>
-              The more detail you can give us about the job, the easier it is
-              for us to provide an accurate quote and timeframe. Let us know if
-              there are any existing issues, safety concerns, or preferred
-              times.
-            </p>
-            <p>
-              For urgent loss-of-power or safety issues, it&apos;s usually best
-              to call us directly. For everything else, this form is the
-              quickest way to get things started.
-            </p>
-            <p className="text-xs text-dark/60">
-              Your details are only used to respond to your enquiry. We
-              don&apos;t share your information with third parties.
-            </p>
-          </div>
+                {/* Phone + Subject */}
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Field>
+                    <FieldLabel className="text-sm font-medium text-dark">
+                      Phone <span className="text-dark/50">(optional)</span>
+                    </FieldLabel>
+                    <Input
+                      name="phone"
+                      placeholder="Mobile or landline"
+                      className="h-10 text-sm"
+                    />
+                  </Field>
+
+                  <Field>
+                    <FieldLabel className="text-sm font-medium text-dark">
+                      Subject
+                    </FieldLabel>
+                    <Input
+                      name="subject"
+                      placeholder="E.g. new lighting, repairs, renovation"
+                      className="h-10 text-sm"
+                      required
+                    />
+                    <FieldError className="text-xs text-red-500">
+                      <ValidationError field="subject" errors={state.errors} />
+                    </FieldError>
+                  </Field>
+                </div>
+
+                {/* Job details */}
+                <Field>
+                  <FieldLabel className="text-sm font-medium text-dark">
+                    Job Details
+                  </FieldLabel>
+                  <FieldDescription className="mb-1 text-sm text-dark/60">
+                    Include your suburb, type of work, and any timing notes.
+                  </FieldDescription>
+                  <Textarea
+                    name="message"
+                    placeholder="Tell us what you need done..."
+                    className="min-h-[130px] resize-y text-sm"
+                    required
+                  />
+                  <FieldError className="text-xs text-red-500">
+                    <ValidationError field="message" errors={state.errors} />
+                  </FieldError>
+                </Field>
+
+                {/* Actions */}
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <Button
+                    type="submit"
+                    disabled={state.submitting}
+                    variant="primaryDark"
+                    size="lg"
+                  >
+                    {state.submitting ? "Sending..." : "Send enquiry"}
+                  </Button>
+
+                  {state.succeeded && (
+                    <p className="text-xs text-primary/80">
+                      Thanks — your message has been sent.
+                    </p>
+                  )}
+                </div>
+
+                <p className="text-[11px] text-dark/55 leading-relaxed mt-1">
+                  For urgent issues like power loss or burning smells, call us
+                  directly for faster action. We never share your information
+                  with third parties.
+                </p>
+              </FieldGroup>
+            </FieldSet>
+          </form>
         </div>
       </div>
     </section>
