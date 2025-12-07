@@ -1,8 +1,11 @@
-import { ArrowRight, Phone, Mail } from "lucide-react";
+import { Phone, Mail, ReceiptText } from "lucide-react";
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { FadeInUp } from "./AnimateOnScroll";
 
 const CTA = () => {
   return (
-    <section className="bg-linear-to-tr from-white via-primary/5 to-white">
+    <section className="bg-linear-to-tr from-white via-primary/5 to-white shadow-xl shadow-black">
       <div className="container pt-20 pb-24">
         <div className="grid gap-12 md:grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)] items-center">
           {/* LEFT — Main CTA */}
@@ -11,7 +14,7 @@ const CTA = () => {
               Need an electrician?
             </p>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-primary mb-4 leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-primary mb-4 leading-7">
               Safe, reliable electrical work — done right the first time.
             </h2>
 
@@ -22,34 +25,22 @@ const CTA = () => {
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
-              <a
-                href="tel:0000000000"
-                className="
-                  inline-flex items-center gap-2 rounded-full 
-                  bg-accent px-6 py-2.5 
-                  text-sm font-semibold text-white
-                  shadow-sm hover:shadow-md
-                  hover:bg-accent/90
-                  transition-all
-                "
-              >
-                Request a call
-                <ArrowRight className="h-4 w-4" />
-              </a>
+              <FadeInUp className="w-full sm:w-auto">
+                <Link href="/#contact">
+                  <Button variant="primaryDark" className="w-full sm:w-auto">
+                    Get a free quote
+                    <ReceiptText />
+                  </Button>
+                </Link>
+              </FadeInUp>
 
-              <a
-                href="mailto:example@email.com?subject=Coastal%20Electrical%20Enquiry"
-                className="
-                  inline-flex items-center gap-2 rounded-full 
-                  border border-primary/20
-                  px-6 py-2.5 
-                  text-sm font-semibold text-primary
-                  hover:border-accent/70 hover:text-accent
-                  transition-all
-                "
-              >
-                Email our team
-              </a>
+              <FadeInUp className="w-full sm:w-auto">
+                <Link href="mailto:example@email.com?subject=Coastal%20Electrical%20Enquiry">
+                  <Button variant="secondaryDark" className="w-full sm:w-auto">
+                    Email our team <Mail />
+                  </Button>
+                </Link>
+              </FadeInUp>
             </div>
           </div>
 

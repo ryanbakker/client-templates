@@ -5,7 +5,7 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="bg-linear-to-tr from-white via-primary/5 to-white"
+      className="bg-linear-to-tr from-white via-primary/5 to-white shadow-xl shadow-black"
     >
       <div className="container pt-16 pb-24">
         <SectionHeader

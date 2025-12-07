@@ -11,7 +11,7 @@ const SectionHeader = ({
 }: SectionHeadingProps) => {
   return (
     <div className="text-center pb-10">
-      <h3 className="font-bold text-4xl text-accent">{heading}</h3>
+      <h3 className="font-bold text-3xl sm:text-4xl text-accent">{heading}</h3>
       <h4
         className={`font-medium text-sm pt-1 text-primary/70 ${
           variant === "dark" && "text-slate-400"

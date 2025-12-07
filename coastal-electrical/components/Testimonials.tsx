@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SectionHeader from "./SectionHeader";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 
 const testimonials = [
   {
@@ -39,7 +40,8 @@ const testimonials = [
 
 const TestimonialsCarousel = () => {
   const [startIndex, setStartIndex] = useState(0);
-  const visibleCount = 3;
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const visibleCount = isDesktop ? 3 : 1;
 
   const getVisibleTestimonials = () => {
     const result = [];
@@ -63,37 +65,24 @@ const TestimonialsCarousel = () => {
   const visibleTestimonials = getVisibleTestimonials();
 
   return (
-    <div className="mt-6 flex items-center gap-4">
-      {/* Left arrow */}
-      <button
-        type="button"
-        onClick={handlePrev}
-        aria-label="Previous testimonials"
-        className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900/80 border border-slate-700/80 text-slate-200 hover:text-accent hover:border-accent/80 shadow-md transition-colors"
-      >
-        <ChevronLeft className="h-5 w-5" />
-      </button>
-
+    <div className="mt-6 flex flex-col md:flex-row md:items-center md:gap-4 h-full">
       {/* Cards */}
-      <div className="flex-1 grid gap-6 md:grid-cols-3">
+      <div className="flex-1 grid gap-6 grid-cols-1 md:grid-cols-3 order-1 md:order-0 h-full">
         {visibleTestimonials.map((t) => (
           <article
             key={t.name}
-            className="group flex h-full flex-col rounded-2xl border border-slate-700/50 bg-slate-900/40 backdrop-blur-sm px-6 py-7 shadow-md hover:shadow-xl hover:border-accent/60 transition-all"
+            className="group flex flex-col rounded-2xl border border-slate-700/50 bg-slate-900/40 backdrop-blur-sm px-6 py-7 shadow-md hover:shadow-xl hover:border-accent/60 transition-all h-[300px]"
           >
-            {/* Icon */}
             <div className="flex items-center gap-3 mb-5">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/20">
                 <Quote className="h-5 w-5 text-accent" />
               </div>
             </div>
 
-            {/* Quote */}
             <p className="text-slate-100 text-sm md:text-base leading-relaxed flex-1">
               {t.quote}
             </p>
 
-            {/* Footer */}
             <div className="mt-6 pt-4 border-t border-slate-700/60">
               <p className="text-slate-50 font-semibold text-sm">{t.name}</p>
               <p className="text-slate-400 text-xs mt-1">{t.role}</p>
@@ -102,15 +91,32 @@ const TestimonialsCarousel = () => {
         ))}
       </div>
 
-      {/* Right arrow */}
-      <button
-        type="button"
-        onClick={handleNext}
-        aria-label="Next testimonials"
-        className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900/80 border border-slate-700/80 text-slate-200 hover:text-accent hover:border-accent/80 shadow-md transition-colors"
+      {/* Arrow controls (mobile bottom, desktop sides) */}
+      <div
+        className="
+        flex justify-center gap-4 mt-4 
+        md:mt-0 md:flex-col md:justify-center md:gap-4
+        md:order-0 order-2
+      "
       >
-        <ChevronRight className="h-5 w-5" />
-      </button>
+        <button
+          type="button"
+          onClick={handlePrev}
+          aria-label="Previous testimonials"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900/80 border border-slate-700/80 text-slate-200 hover:text-accent hover:border-accent/80 shadow-md transition-colors"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+
+        <button
+          type="button"
+          onClick={handleNext}
+          aria-label="Next testimonials"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900/80 border border-slate-700/80 text-slate-200 hover:text-accent hover:border-accent/80 shadow-md transition-colors"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+      </div>
     </div>
   );
 };

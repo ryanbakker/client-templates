@@ -1,65 +1,44 @@
 import { NAV_LINKS } from "@/constants";
 import Logo from "./Logo";
 import Link from "next/link";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./ui/sheet";
-import { Menu, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
+import { FadeInDown } from "./AnimateOnScroll";
 
 const Navigation = () => {
   return (
-    <nav className="z-10 relative">
+    <nav className="z-20 relative">
       <div className="flex items-center justify-between container">
-        <div>
+        <FadeInDown>
           <Logo />
-        </div>
+        </FadeInDown>
 
         <div>
-          <ul className="hidden sm:flex flex-row items-center gap-8">
+          <ul className="flex flex-row items-center relative z-30">
             {NAV_LINKS.map((link) => (
-              <li key={link.label}>
-                <Link
-                  href={link.href}
-                  className="text-white font-medium hover:text-accent transition-all"
-                >
-                  {link.label}
-                </Link>
-              </li>
+              <FadeInDown key={link.label}>
+                <li className="hidden md:block relative z-40">
+                  <Link
+                    href={link.href}
+                    className="text-white font-medium hover:text-accent transition-all relative z-50"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              </FadeInDown>
             ))}
 
-            <li>
-              <Link
-                href="tel:00000000000"
-                className="flex flex-row items-center text-white gap-2 hover:text-accent transition-all"
-              >
-                <Phone className="h-4 w-4 pt-px" /> 999 999 999
-              </Link>
-            </li>
+            {/* Phone link (optional: animate after all nav links) */}
+            <FadeInDown>
+              <li>
+                <Link
+                  href="tel:00000000000"
+                  className="flex flex-row items-center text-white gap-2 hover:text-accent transition-all text-sm sm:text-base"
+                >
+                  <Phone className="h-4 w-4 pt-px" /> 999 999 999
+                </Link>
+              </li>
+            </FadeInDown>
           </ul>
-
-          <Sheet>
-            <SheetTrigger className="sm:hidden">
-              <Menu />
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>Coastal Electrical</SheetTitle>
-              </SheetHeader>
-              <div>
-                <ul className="flex flex-col gap-6">
-                  {NAV_LINKS.map((link) => (
-                    <li key={link.label}>
-                      <Link href={link.href}>{link.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </SheetContent>
-          </Sheet>
         </div>
       </div>
     </nav>

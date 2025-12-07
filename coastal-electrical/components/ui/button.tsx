@@ -34,7 +34,7 @@ const buttonVariants = cva(
         primaryDark:
           "bg-accent text-primary hover:bg-primary hover:text-accent transition-all hover:gap-1.5",
         secondaryDark:
-          "border border-accent text-accent hover:text-primary hover:bg-accent hover:gap-1.5 transition-all",
+          "border border-primary text-primary hover:border-accent hover:bg-accent hover:gap-1.5 transition-all",
         secondaryLight:
           "border border-accent text-accent hover:text-primary hover:bg-accent hover:gap-1.5 transition-all",
       },
