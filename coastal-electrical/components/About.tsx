@@ -2,7 +2,7 @@ import SectionHeader from "./SectionHeader";
 
 const About = () => {
   return (
-    <section className="bg-primary">
+    <section id="about" className="bg-primary">
       <div className="container pt-16 pb-24">
         <SectionHeader
           heading="About Coastal Electrical"

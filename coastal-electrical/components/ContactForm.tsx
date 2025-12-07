@@ -1,7 +1,6 @@
 "use client";
 
 import SectionHeader from "./SectionHeader";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,9 +15,42 @@ import {
 } from "@/components/ui/field";
 
 import { useForm, ValidationError } from "@formspree/react";
+import { toast } from "sonner";
+import { useEffect, useRef } from "react";
 
 const Contact = () => {
-  const [state, handleSubmit] = useForm("YOUR_FORMSPREE_FORM_ID");
+  const [state, handleSubmit] = useForm("mjknoqde");
+
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  const hasErrors =
+    state.errors &&
+    Object.values(state.errors).some((err) => err !== undefined);
+
+  if (hasErrors) {
+    toast.error("Something went wrong — please check your details.");
+    // shake animation etc.
+  }
+
+  useEffect(() => {
+    // Success
+    if (state.succeeded) {
+      toast.success("Message sent successfully!");
+      formRef.current?.reset();
+    }
+
+    // Error detection (Formspree errors are an object, not an array)
+    const hasErrors = state.errors && Object.values(state.errors).length > 0;
+
+    if (hasErrors) {
+      toast.error("Something went wrong — please check your details.");
+
+      formRef.current?.classList.add("animate-shake");
+      setTimeout(() => {
+        formRef.current?.classList.remove("animate-shake");
+      }, 600);
+    }
+  }, [state.succeeded, state.errors]);
 
   return (
     <section className="bg-linear-to-tr from-white via-primary/5 to-white">
@@ -31,13 +63,15 @@ const Contact = () => {
 
         <div className="mt-2 flex justify-center">
           <form
+            ref={formRef}
             onSubmit={handleSubmit}
-            className="
+            className={`
               relative w-full max-w-3xl
               rounded-2xl border border-primary/10 bg-white/95
               shadow-[0_10px_30px_rgba(0,0,0,0.06)] backdrop-blur-lg
               px-6 py-8 sm:px-7 sm:py-9 overflow-hidden
-            "
+              ${state.submitting ? "opacity-60 animate-pulse" : ""}
+            `}
           >
             <span className="pointer-events-none absolute inset-x-0 top-0 h-1.5 rounded-t-2xl bg-accent/80" />
 
@@ -59,13 +93,18 @@ const Contact = () => {
                       Name
                     </FieldLabel>
                     <Input
+                      id="name"
                       name="name"
                       placeholder="Your name"
                       className="h-10 text-sm"
                       required
                     />
                     <FieldError className="text-xs text-red-500">
-                      <ValidationError field="name" errors={state.errors} />
+                      <ValidationError
+                        prefix="Name"
+                        field="name"
+                        errors={state.errors}
+                      />
                     </FieldError>
                   </Field>
 
@@ -74,6 +113,7 @@ const Contact = () => {
                       Email
                     </FieldLabel>
                     <Input
+                      id="email"
                       name="email"
                       type="email"
                       placeholder="you@example.com"
@@ -81,7 +121,11 @@ const Contact = () => {
                       required
                     />
                     <FieldError className="text-xs text-red-500">
-                      <ValidationError field="email" errors={state.errors} />
+                      <ValidationError
+                        prefix="Email"
+                        field="email"
+                        errors={state.errors}
+                      />
                     </FieldError>
                   </Field>
                 </div>
@@ -93,6 +137,7 @@ const Contact = () => {
                       Phone <span className="text-dark/50">(optional)</span>
                     </FieldLabel>
                     <Input
+                      id="phone"
                       name="phone"
                       placeholder="Mobile or landline"
                       className="h-10 text-sm"
@@ -104,13 +149,18 @@ const Contact = () => {
                       Subject
                     </FieldLabel>
                     <Input
+                      id="subject"
                       name="subject"
                       placeholder="E.g. new lighting, repairs, renovation"
                       className="h-10 text-sm"
                       required
                     />
                     <FieldError className="text-xs text-red-500">
-                      <ValidationError field="subject" errors={state.errors} />
+                      <ValidationError
+                        prefix="Subject"
+                        field="subject"
+                        errors={state.errors}
+                      />
                     </FieldError>
                   </Field>
                 </div>
@@ -124,13 +174,18 @@ const Contact = () => {
                     Include your suburb, type of work, and any timing notes.
                   </FieldDescription>
                   <Textarea
+                    id="message"
                     name="message"
                     placeholder="Tell us what you need done..."
                     className="min-h-[130px] resize-y text-sm"
                     required
                   />
                   <FieldError className="text-xs text-red-500">
-                    <ValidationError field="message" errors={state.errors} />
+                    <ValidationError
+                      prefix="Message"
+                      field="message"
+                      errors={state.errors}
+                    />
                   </FieldError>
                 </Field>
 
@@ -154,8 +209,7 @@ const Contact = () => {
 
                 <p className="text-[11px] text-dark/55 leading-relaxed mt-1">
                   For urgent issues like power loss or burning smells, call us
-                  directly for faster action. We never share your information
-                  with third parties.
+                  directly.
                 </p>
               </FieldGroup>
             </FieldSet>
