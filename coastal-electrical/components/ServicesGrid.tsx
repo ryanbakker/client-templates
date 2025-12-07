@@ -1,5 +1,6 @@
 import { Zap, Home, Lightbulb, Plug, PanelLeft, Building } from "lucide-react";
 import { LucideIcon } from "lucide-react";
+import { FadeInUp } from "./AnimateOnScroll";
 
 interface ServiceCardProps {
   title: string;
@@ -129,13 +130,19 @@ const services = [
 export function ServicesGrid() {
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {services.map((service) => (
-        <ServiceCard
+      {services.map((service, index) => (
+        <FadeInUp
           key={service.title}
-          title={service.title}
-          description={service.description}
-          icon={service.icon}
-        />
+          delay={index * 20}
+          distance={25}
+          duration={600}
+        >
+          <ServiceCard
+            title={service.title}
+            description={service.description}
+            icon={service.icon}
+          />
+        </FadeInUp>
       ))}
     </div>
   );

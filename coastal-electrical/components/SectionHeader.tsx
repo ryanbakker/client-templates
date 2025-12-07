@@ -1,3 +1,5 @@
+import { FadeInUp } from "./AnimateOnScroll";
+
 interface SectionHeadingProps {
   heading: string;
   subheading?: string;
@@ -11,14 +13,21 @@ const SectionHeader = ({
 }: SectionHeadingProps) => {
   return (
     <div className="text-center pb-10">
-      <h3 className="font-bold text-3xl sm:text-4xl text-accent">{heading}</h3>
-      <h4
-        className={`font-medium text-sm pt-1 text-primary/70 ${
-          variant === "dark" && "text-slate-400"
-        }`}
-      >
-        {subheading}
-      </h4>
+      <FadeInUp>
+        <h3 className="font-bold text-3xl sm:text-4xl text-accent">
+          {heading}
+        </h3>
+      </FadeInUp>
+
+      <FadeInUp delay={150}>
+        <h4
+          className={`font-medium text-sm pt-1 text-primary/70 ${
+            variant === "dark" && "text-slate-400"
+          }`}
+        >
+          {subheading}
+        </h4>
+      </FadeInUp>
     </div>
   );
 };

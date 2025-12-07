@@ -13,7 +13,7 @@ const Navigation = () => {
         </FadeInDown>
 
         <div>
-          <ul className="flex flex-row items-center relative z-30">
+          <ul className="flex flex-row items-center relative z-30 md:gap-8">
             {NAV_LINKS.map((link) => (
               <FadeInDown key={link.label}>
                 <li className="hidden md:block relative z-40">
