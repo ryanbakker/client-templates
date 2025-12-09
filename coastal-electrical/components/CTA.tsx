@@ -3,7 +3,47 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { FadeInLeft, FadeInUp } from "./AnimateOnScroll";
 
-const CTA = () => {
+interface CTAProps {
+  data?: {
+    badge?: string;
+    heading?: string;
+    description?: string;
+    primaryButtonText?: string;
+    secondaryButtonText?: string;
+    contactCardTitle?: string;
+    phone?: string;
+    email?: string;
+    contactCardFooter?: string;
+  };
+}
+
+const CTA = ({ data }: CTAProps) => {
+  if (
+    !data?.badge ||
+    !data?.heading ||
+    !data?.description ||
+    !data?.primaryButtonText ||
+    !data?.secondaryButtonText ||
+    !data?.contactCardTitle ||
+    !data?.phone ||
+    !data?.email ||
+    !data?.contactCardFooter
+  ) {
+    return null;
+  }
+
+  const {
+    badge,
+    heading,
+    description,
+    primaryButtonText,
+    secondaryButtonText,
+    contactCardTitle,
+    phone,
+    email,
+    contactCardFooter,
+  } = data;
+
   return (
     <section className="bg-linear-to-tr from-white via-primary/5 to-white shadow-xl shadow-black">
       <div className="container pt-20 pb-24">
@@ -12,22 +52,19 @@ const CTA = () => {
           <div>
             <FadeInUp delay={200}>
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary/60 mb-3">
-                Need an electrician?
+                {badge}
               </p>
             </FadeInUp>
 
             <FadeInUp delay={400}>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-primary mb-4 leading-7 md:leading-8 lg:leading-10">
-                Safe, reliable electrical work — done right the first time.
+                {heading}
               </h2>
             </FadeInUp>
 
             <FadeInUp delay={600}>
               <p className="text-dark/70 text-sm sm:text-base max-w-xl mb-8">
-                Whether you need urgent repairs, new wiring, or lighting
-                upgrades, Coastal Electrical delivers compliant, tidy
-                workmanship with straightforward communication from start to
-                finish.
+                {description}
               </p>
             </FadeInUp>
 
@@ -35,16 +72,18 @@ const CTA = () => {
               <FadeInUp delay={700} className="w-full sm:w-auto">
                 <Link href="/#contact">
                   <Button variant="primaryDark" className="w-full sm:w-auto">
-                    Get a free quote
+                    {primaryButtonText}
                     <ReceiptText />
                   </Button>
                 </Link>
               </FadeInUp>
 
               <FadeInUp delay={800} className="w-full sm:w-auto">
-                <Link href="mailto:example@email.com?subject=Coastal%20Electrical%20Enquiry">
+                <Link
+                  href={`mailto:${email}?subject=Coastal%20Electrical%20Enquiry`}
+                >
                   <Button variant="secondaryDark" className="w-full sm:w-auto">
-                    Email our team <Mail />
+                    {secondaryButtonText} <Mail />
                   </Button>
                 </Link>
               </FadeInUp>
@@ -62,7 +101,7 @@ const CTA = () => {
             "
             >
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary/60 mb-4">
-                Same-day response for urgent work
+                {contactCardTitle}
               </p>
 
               <div className="space-y-5">
@@ -74,10 +113,10 @@ const CTA = () => {
                   <div>
                     <p className="text-xs text-dark/50">Call us directly</p>
                     <a
-                      href="tel:0000000000"
+                      href={`tel:${phone.replace(/\s/g, "")}`}
                       className="text-sm font-semibold text-primary hover:text-accent transition-colors"
                     >
-                      00 000 0000
+                      {phone}
                     </a>
                   </div>
                 </div>
@@ -90,18 +129,17 @@ const CTA = () => {
                   <div>
                     <p className="text-xs text-dark/50">Send an email</p>
                     <a
-                      href="mailto:example@email.com"
+                      href={`mailto:${email}`}
                       className="text-sm font-semibold text-primary hover:text-accent transition-colors break-all"
                     >
-                      example@email.com
+                      {email}
                     </a>
                   </div>
                 </div>
               </div>
 
               <p className="mt-6 text-[11px] leading-relaxed text-dark/50">
-                Fully licensed and experienced electricians servicing East &
-                South Auckland for residential, commercial, and renovation work.
+                {contactCardFooter}
               </p>
             </div>
           </FadeInLeft>

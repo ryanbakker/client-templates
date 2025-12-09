@@ -1,7 +1,30 @@
 import SectionHeader from "./SectionHeader";
 import { ServicesGrid } from "./ServicesGrid";
 
-const Services = () => {
+interface ServicesProps {
+  data?: {
+    heading?: string;
+    subheading?: string;
+    services?: Array<{
+      title: string;
+      description: string;
+      icon?: string;
+    }>;
+  };
+}
+
+const Services = ({ data }: ServicesProps) => {
+  if (
+    !data?.heading ||
+    !data?.subheading ||
+    !data?.services ||
+    data.services.length === 0
+  ) {
+    return null;
+  }
+
+  const { heading, subheading } = data;
+
   return (
     <section
       id="services"
@@ -9,12 +32,12 @@ const Services = () => {
     >
       <div className="container pt-16 pb-24">
         <SectionHeader
-          heading="Our Services"
-          subheading="Get in touch if you require specialist work"
+          heading={heading}
+          subheading={subheading}
           variant="light"
         />
 
-        <ServicesGrid />
+        <ServicesGrid services={data?.services} />
       </div>
     </section>
   );

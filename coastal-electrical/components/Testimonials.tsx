@@ -6,40 +6,15 @@ import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 import { FadeInUp } from "./AnimateOnScroll";
 
-const testimonials = [
-  {
-    name: "Sarah Thompson",
-    role: "Residential Client – Beachlands",
-    quote:
-      "Coastal Electrical were on time, tidy, and explained everything clearly. The new lighting has completely transformed our home.",
-  },
-  {
-    name: "Mark Wilson",
-    role: "Renovation Project – Howick",
-    quote:
-      "From switchboard upgrades to the last outlet, the team were professional and easy to deal with. Nothing was a problem.",
-  },
-  {
-    name: "Emma Rogers",
-    role: "Property Manager",
-    quote:
-      "Reliable, responsive, and great communication. Coastal Electrical are now our first call for any electrical work on our rentals.",
-  },
-  {
-    name: "David Chen",
-    role: "New Build – Whitford",
-    quote:
-      "The team worked seamlessly with our other trades and delivered on time. Very impressed with the quality of the finish.",
-  },
-  {
-    name: "Lisa Brown",
-    role: "Commercial Fit-Out",
-    quote:
-      "Clear communication from start to finish and no surprises on the invoice. Highly recommend Coastal Electrical.",
-  },
-];
+interface TestimonialsCarouselProps {
+  testimonials: Array<{
+    name: string;
+    role: string;
+    quote: string;
+  }>;
+}
 
-const TestimonialsCarousel = () => {
+const TestimonialsCarousel = ({ testimonials }: TestimonialsCarouselProps) => {
   const [startIndex, setStartIndex] = useState(0);
 
   const isTablet = useMediaQuery("(min-width: 768px)");
@@ -151,7 +126,30 @@ const TestimonialsCarousel = () => {
   );
 };
 
-const Testimonials = () => {
+interface TestimonialsProps {
+  data?: {
+    heading?: string;
+    subheading?: string;
+    testimonials?: Array<{
+      name: string;
+      role: string;
+      quote: string;
+    }>;
+  };
+}
+
+const Testimonials = ({ data }: TestimonialsProps) => {
+  if (
+    !data?.heading ||
+    !data?.subheading ||
+    !data?.testimonials ||
+    data.testimonials.length === 0
+  ) {
+    return null;
+  }
+
+  const { heading, subheading, testimonials } = data;
+
   return (
     <section
       id="testimonials"
@@ -159,13 +157,13 @@ const Testimonials = () => {
     >
       <div className="container pt-16 pb-24">
         <SectionHeader
-          heading="What Our Clients Say"
-          subheading="Trusted by homeowners and property managers across Auckland"
+          heading={heading}
+          subheading={subheading}
           variant="dark"
         />
 
         <FadeInUp delay={300}>
-          <TestimonialsCarousel />
+          <TestimonialsCarousel testimonials={testimonials} />
         </FadeInUp>
 
         {/* Subtle Feedback Link */}
