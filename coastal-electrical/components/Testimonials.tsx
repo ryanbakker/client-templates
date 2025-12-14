@@ -1,0 +1,185 @@
+"use client";
+
+import { useState } from "react";
+import SectionHeader from "./SectionHeader";
+import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { useMediaQuery } from "@/lib/useMediaQuery";
+import { FadeInUp } from "./AnimateOnScroll";
+
+interface TestimonialsCarouselProps {
+  testimonials: Array<{
+    name: string;
+    role: string;
+    quote: string;
+  }>;
+}
+
+const TestimonialsCarousel = ({ testimonials }: TestimonialsCarouselProps) => {
+  const [startIndex, setStartIndex] = useState(0);
+
+  const isTablet = useMediaQuery("(min-width: 768px)");
+  const isDesktop = useMediaQuery("(min-width: 1280px)");
+
+  // 1 → 2 → 3 cards based on screen size
+  const visibleCount = isDesktop ? 3 : isTablet ? 2 : 1;
+
+  const getVisibleTestimonials = () => {
+    const result = [];
+    for (let i = 0; i < visibleCount; i++) {
+      const index = (startIndex + i) % testimonials.length;
+      result.push(testimonials[index]);
+    }
+    return result;
+  };
+
+  const handlePrev = () =>
+    setStartIndex(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
+
+  const handleNext = () =>
+    setStartIndex((prev) => (prev + 1) % testimonials.length);
+
+  const visibleTestimonials = getVisibleTestimonials();
+
+  return (
+    <div
+      className="
+        mt-6 flex flex-col items-center gap-4
+        md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-6
+      "
+    >
+      {/* Left Arrow (desktop/tablet only) */}
+      <button
+        type="button"
+        onClick={handlePrev}
+        aria-label="Previous testimonials"
+        className="
+          hidden md:flex h-11 w-11 items-center justify-center
+          rounded-full bg-slate-900/80 border border-slate-700/80 text-slate-200
+          hover:text-accent hover:border-accent/80 shadow-md transition-colors
+        "
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+
+      {/* Cards */}
+      <div className="w-full grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        {visibleTestimonials.map((t) => (
+          <article
+            key={t.name}
+            className="group flex flex-col rounded-2xl border border-slate-700/50 bg-slate-900/40 backdrop-blur-sm px-6 py-7 shadow-md hover:shadow-xl hover:border-accent/60 transition-all h-[300px] md:h-[350px] overflow-scroll"
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/20">
+                <Quote className="h-5 w-5 text-accent" />
+              </div>
+            </div>
+
+            <p className="text-slate-100 text-sm md:text-base leading-relaxed flex-1">
+              {t.quote}
+            </p>
+
+            <div className="mt-6 pt-4 border-t border-slate-700/60">
+              <p className="text-slate-50 font-semibold text-sm">{t.name}</p>
+              <p className="text-slate-400 text-xs mt-1">{t.role}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {/* Right Arrow (desktop/tablet only) */}
+      <button
+        type="button"
+        onClick={handleNext}
+        aria-label="Next testimonials"
+        className="
+          hidden md:flex h-11 w-11 items-center justify-center
+          rounded-full bg-slate-900/80 border border-slate-700/80 text-slate-200
+          hover:text-accent hover:border-accent/80 shadow-md transition-colors
+        "
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+
+      {/* Mobile arrows beneath cards */}
+      <div className="flex md:hidden justify-center gap-4 mt-2">
+        <button
+          type="button"
+          onClick={handlePrev}
+          aria-label="Previous testimonials"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900/80 border border-slate-700/80 text-slate-200 hover:text-accent hover:border-accent/80 shadow-md transition-colors"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+
+        <button
+          type="button"
+          onClick={handleNext}
+          aria-label="Next testimonials"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900/80 border border-slate-700/80 text-slate-200 hover:text-accent hover:border-accent/80 shadow-md transition-colors"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+interface TestimonialsProps {
+  data?: {
+    heading?: string;
+    subheading?: string;
+    testimonials?: Array<{
+      name: string;
+      role: string;
+      quote: string;
+    }>;
+  };
+}
+
+const Testimonials = ({ data }: TestimonialsProps) => {
+  if (
+    !data?.heading ||
+    !data?.subheading ||
+    !data?.testimonials ||
+    data.testimonials.length === 0
+  ) {
+    return null;
+  }
+
+  const { heading, subheading, testimonials } = data;
+
+  return (
+    <section
+      id="testimonials"
+      className="bg-linear-to-tr from-primary via-primary/97 to-primary py-8"
+    >
+      <div className="container pt-16 pb-24">
+        <SectionHeader
+          heading={heading}
+          subheading={subheading}
+          variant="dark"
+        />
+
+        <FadeInUp delay={300}>
+          <TestimonialsCarousel testimonials={testimonials} />
+        </FadeInUp>
+
+        {/* Subtle Feedback Link */}
+        <FadeInUp delay={500}>
+          <div className="mt-10 text-center">
+            <a
+              href="mailto:example@email.com?subject=Coastal%20Electrical%20Feedback"
+              className="text-slate-400 text-sm hover:text-accent transition-colors underline underline-offset-4"
+            >
+              Give us feedback
+            </a>
+          </div>
+        </FadeInUp>
+      </div>
+    </section>
+  );
+};
+
+export default Testimonials;
