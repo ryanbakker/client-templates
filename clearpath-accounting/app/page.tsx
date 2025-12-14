@@ -1,6 +1,12 @@
+import AboutContact from "@/components/AboutContact";
 import Footer from "@/components/Footer";
+import GetStarted from "@/components/GetStarted";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import Pricing from "@/components/Pricing";
+import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
+import WhyUs from "@/components/WhyUs";
 import Image from "next/image";
 
 export default function Home() {
@@ -37,7 +43,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="text-center bg-teal-200/40 pt-[22px] pb-4">
+      <section className="text-center bg-linear-to-tr from-teal-200/60 to-teal-200/30 pt-[22px] pb-4">
         <p className="text-xs font-bold text-teal-900 leading-[6px]">
           Join today for 1 month free book keeping!
         </p>
@@ -45,6 +51,19 @@ export default function Home() {
           Focus on Growth, We&apos;ll Handle the Numbers.
         </span>
       </section>
+
+      <WhyUs />
+
+      <Services />
+
+      <GetStarted />
+
+      <Testimonials />
+
+      <Pricing />
+
+      {/* About / Contact Combined Section */}
+      <AboutContact />
 
       <Footer />
     </main>

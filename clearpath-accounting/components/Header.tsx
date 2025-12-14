@@ -19,7 +19,7 @@ function Header() {
     <header
       className={`fixed top-0 left-0 w-full transition-all duration-300 z-50 ${
         scrolled
-          ? "bg-teal-50/70 backdrop-blur-md shadow-sm my-0 border-b border-teal-100/30"
+          ? "bg-white/60 backdrop-blur-md shadow-sm my-0 border-b border-teal-50/50"
           : "bg-transparent"
       }`}
     >
@@ -31,7 +31,7 @@ function Header() {
         <nav>
           <Link
             href="tel:099999999"
-            className="flex items-center gap-0.5 sm:gap-3 text-teal-950 font-medium text-sm sm:text-lg hover:text-teal-200 transition-all"
+            className="flex items-center gap-0.5 sm:gap-2 text-teal-950 font-medium text-sm sm:text-lg hover:text-teal-200 transition-all"
           >
             <Smartphone className="h-4 sm:h-6" /> 09 999 9999
           </Link>
