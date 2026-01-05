@@ -1,5 +1,12 @@
-import { Zap, Home, Lightbulb, Plug, PanelLeft, Building } from "lucide-react";
-import { LucideIcon } from "lucide-react";
+import {
+  Zap,
+  Home,
+  Lightbulb,
+  Plug,
+  PanelLeft,
+  Building,
+  type LucideIcon,
+} from "lucide-react";
 import { FadeInUp } from "./AnimateOnScroll";
 
 interface ServiceCardProps {
@@ -7,6 +14,16 @@ interface ServiceCardProps {
   description: string;
   icon: LucideIcon;
 }
+
+// Icon mapping for Sanity data
+const iconMap: Record<string, LucideIcon> = {
+  Zap,
+  Home,
+  Lightbulb,
+  Plug,
+  PanelLeft,
+  Building,
+};
 
 // Accent used: text-accent, bg-accent/xx, border-accent/xx
 // Assumes your accent color is orange in your Tailwind theme.
@@ -90,60 +107,34 @@ export function ServiceCard({
   );
 }
 
-const services = [
-  {
-    title: "Emergency Repairs",
-    description: "Fast and reliable fault finding and urgent electrical fixes.",
-    icon: Zap,
-  },
-  {
-    title: "New Build & Renovation Wiring",
-    description:
-      "Safe, compliant wiring for new homes, extensions, and remodels.",
-    icon: Home,
-  },
-  {
-    title: "Lighting Installation",
-    description:
-      "Indoor and outdoor lighting, LEDs, security lighting, and upgrades.",
-    icon: Lightbulb,
-  },
-  {
-    title: "Outlets & Power Points",
-    description:
-      "New power points, rewiring, appliance circuits, and EV chargers.",
-    icon: Plug,
-  },
-  {
-    title: "Switchboard Upgrades",
-    description: "Upgrade outdated boards to modern, safe, compliant systems.",
-    icon: PanelLeft,
-  },
-  {
-    title: "Commercial Electrical",
-    description:
-      "Maintenance and electrical fit-outs for offices and small businesses.",
-    icon: Building,
-  },
-];
+interface ServicesGridProps {
+  services: Array<{
+    title: string;
+    description: string;
+    icon?: string;
+  }>;
+}
 
-export function ServicesGrid() {
+export function ServicesGrid({ services }: ServicesGridProps) {
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {services.map((service, index) => (
-        <FadeInUp
-          key={service.title}
-          delay={index * 20}
-          distance={25}
-          duration={600}
-        >
-          <ServiceCard
-            title={service.title}
-            description={service.description}
-            icon={service.icon}
-          />
-        </FadeInUp>
-      ))}
+      {services.map((service, index) => {
+        const IconComponent = iconMap[service.icon || ""] || Zap;
+        return (
+          <FadeInUp
+            key={service.title}
+            delay={index * 20}
+            distance={25}
+            duration={600}
+          >
+            <ServiceCard
+              title={service.title}
+              description={service.description}
+              icon={IconComponent}
+            />
+          </FadeInUp>
+        );
+      })}
     </div>
   );
 }

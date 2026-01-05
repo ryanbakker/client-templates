@@ -19,7 +19,14 @@ import { toast } from "sonner";
 import { useEffect, useRef } from "react";
 import { FadeInUp } from "./AnimateOnScroll";
 
-const Contact = () => {
+interface ContactProps {
+  data?: {
+    heading?: string;
+    subheading?: string;
+  };
+}
+
+const Contact = ({ data }: ContactProps) => {
   const [state, handleSubmit] = useForm("mjknoqde");
 
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -56,11 +63,13 @@ const Contact = () => {
   return (
     <section className="bg-linear-to-tr from-white via-primary/5 to-white">
       <div className="container pt-16 pb-24">
-        <SectionHeader
-          heading="Request a Quote"
-          subheading="Tell us about your job and we'll get back to you promptly"
-          variant="light"
-        />
+        {!data?.heading || !data?.subheading ? null : (
+          <SectionHeader
+            heading={data.heading}
+            subheading={data.subheading}
+            variant="light"
+          />
+        )}
 
         <div className="mt-2 flex justify-center">
           <FadeInUp delay={300} className="w-full flex justify-center">

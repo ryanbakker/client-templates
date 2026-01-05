@@ -153,4 +153,52 @@
   .container {
     @apply max-w-7xl mx-auto p-4;
   }
+
+  section {
+    @apply pt-14 pb-18;
+  }
+}
+
+@layer utilities {
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-reverse {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 45s linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee-reverse 50s linear infinite;
+  }
+
+  .plan-card, .highlighted-plan-card {
+    @apply w-full rounded-xl;
+  }
+
+  .plan-card {
+    @apply p-6 bg-teal-900 border border-teal-700 sm:h-full md:h-auto;
+  }
+
+  .highlighted-plan-card {
+    @apply md:h-full bg-teal-400 bg-linear-to-tl from-cyan-400/20 via-teal-400 to-cyan-400/20 p-6;
+  }
+
+  .form-input-field {
+    @apply bg-teal-50/50 border border-teal-800/10 text-sm text-teal-900 focus-visible:border-teal-900/40 focus-visible:ring-0;
+  }
 }

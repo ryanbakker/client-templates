@@ -1,0 +1,63 @@
+* Hero
+    * Logo
+    * Phone
+    * Heading
+    * Sub heading
+    * Button
+    * Background image
+* Promotion banner
+    * Heading
+    * Sub heading
+* Choose Us
+    * Heading
+    * Description
+    * Cards
+        * Icon
+        * Title
+        * Description
+* Services
+    * Heading
+    * Description
+    * Card
+        * Icon
+        * Title
+        * Description
+        * List
+* Process
+    * Heading
+    * Description
+    * Step
+        * Title
+        * Description
+        * Image
+* Testimonials
+    * Heading
+    * Description
+    * Card
+        * Star rating
+        * Testimony
+        * Person name
+        * Person’s job position
+        * Date
+* Pricing
+    * Heading
+    * Description
+    * Plan
+        * Title
+        * Description
+        * Price
+        * Recurring
+            * No
+            * Monthly
+            * Annually
+        * Included features
+        * Showcase
+        * Action button
+* Contact
+    * Heading
+    * Description
+* About
+    * Heading
+    * Description
+* Footer
+    * Subtext 
