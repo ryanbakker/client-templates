@@ -1,31 +1,52 @@
 "use client";
 
-/**
- * This configuration is used to for the Sanity Studio that’s mounted on the `/app/studio/[[...tool]]/page.tsx` route
- */
-
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
-
-// Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
-import { schema } from "./sanity/schemaTypes";
 import { presentationTool } from "sanity/presentation";
+import { schema } from "./sanity/schemaTypes";
+
+const singletonTypes = new Set([
+  "heroBanner",
+  "promotionBanner",
+  "chooseUs",
+  "services",
+  "process",
+  "testimonials",
+  "pricing",
+  "contact",
+  "about",
+  "footer",
+]);
 
 export default defineConfig({
   basePath: "/studio",
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
+
+  // schema: {
+  //   ...schema,
+  //   templates: (prev) =>
+  //     prev.filter((template) => !singletonTypes.has(template.schemaType)),
+  // },
+
+  document: {
+    actions: (prev, context) => {
+      if (singletonTypes.has(context.schemaType)) {
+        return prev.filter((action) => action.action === "publish");
+      }
+
+      return prev;
+    },
+  },
+
   plugins: [
     structureTool(),
-    // Vision is for querying with GROQ from inside the Studio
-    // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: "2025-12-14" }),
     presentationTool({
       previewUrl: {
-        preview: "/", // which route to load in the iframe
+        preview: "/",
         previewMode: {
           enable: "/api/draft-mode/enable",
           disable: "/api/draft-mode/disable",

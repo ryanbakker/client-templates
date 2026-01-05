@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export function CardGrid({
+export function ServicesCardGrid({
   children,
   className,
 }: {
@@ -11,7 +11,7 @@ export function CardGrid({
   return (
     <div
       className={cn(
-        "grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 container",
+        "grid gap-6 md:grid-cols-2 lg:grid-cols-3 container",
         className
       )}
     >

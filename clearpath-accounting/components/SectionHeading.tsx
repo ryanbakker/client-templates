@@ -20,14 +20,14 @@ function SectionHeading({
       }`}
     >
       <h3
-        className={`font-bold text-3xl pb-1 ${
+        className={`font-bold text-3xl lg:text-4xl pb-1 ${
           variant === "light" ? "text-teal-950" : "text-teal-50"
         }`}
       >
         {title}
       </h3>
       <p
-        className={`text-sm max-w-[550px] ${
+        className={`text-sm lg:text-base max-w-[550px] ${
           variant === "light" ? "text-teal-950/70" : "text-teal-50/70"
         }`}
       >

@@ -3,9 +3,20 @@
 import { useEffect, useRef, useState } from "react";
 import SectionHeading from "@/components/SectionHeading";
 import Image from "next/image";
-import { STEPS } from "@/constants";
 
-export default function OurProcess() {
+interface SanityStep {
+  stepTitle: string;
+  stepDescription: string;
+  imageUrl: string;
+}
+
+interface ProcessData {
+  heading: string;
+  description: string;
+  steps: SanityStep[];
+}
+
+export default function OurProcess({ data }: { data: ProcessData }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
 
@@ -33,23 +44,26 @@ export default function OurProcess() {
   }, []);
 
   return (
-    <section className="section bg-radial from-teal-50/80 via-teal-50/50 to-teal-50/20">
+    <section
+      id="get-started"
+      className="section bg-radial from-teal-50/80 via-teal-50/50 to-teal-50/20"
+    >
       <div className="container mb-24">
         <SectionHeading
-          title="Our Process"
+          title={data.heading}
           variant="light"
           position="center"
-          description="Dive into your journey when you join us. We will guide you through every step of the way, we're here to help."
+          description={data.description}
         />
       </div>
 
       <div className="container grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24">
         {/* LEFT — Steps with larger spacing */}
         <aside>
-          <ul className="relative space-y-40">
+          <ul className="relative space-y-40 pb-12">
             {" "}
             {/* VERY large spacing */}
-            {STEPS.map((step, index) => {
+            {data.steps.map((step, index) => {
               const isActive = index === activeIndex;
 
               return (
@@ -67,11 +81,11 @@ export default function OurProcess() {
                 >
                   <span
                     className={`
-                      block text-sm font-semibold mb-4
-                      ${isActive ? "text-teal-400" : "text-slate-500"}
+                      block font-black mb-4
+                      ${isActive ? "text-teal-400" : "text-slate-300"}
                     `}
                   >
-                    {step.index}
+                    0{index + 1}
                   </span>
 
                   <h6
@@ -80,16 +94,16 @@ export default function OurProcess() {
                       ${isActive ? "text-foreground" : "text-slate-500"}
                     `}
                   >
-                    {step.label}
+                    {step.stepTitle}
                   </h6>
 
                   <p
                     className={`
                       text-base leading-relaxed max-w-md
-                      ${isActive ? "text-slate-300" : "text-slate-600"}
+                      ${isActive ? "text-slate-500" : "text-slate-400"}
                     `}
                   >
-                    {step.description}
+                    {step.stepDescription}
                   </p>
                 </li>
               );
@@ -98,16 +112,16 @@ export default function OurProcess() {
         </aside>
 
         {/* RIGHT — Sticky images */}
-        <div className="relative h-full hidden md:block">
+        <div className="relative h-full hidden md:block mb-8">
           <div className="sticky top-28 flex justify-center items-center h-[80vh]">
-            {STEPS.map((step, index) => {
+            {data.steps.map((step, index) => {
               const isActive = index === activeIndex;
 
               return (
                 <Image
                   key={index}
-                  src={step.image}
-                  alt={step.label}
+                  src={step.imageUrl}
+                  alt={step.stepTitle}
                   width={650}
                   height={650}
                   className={`

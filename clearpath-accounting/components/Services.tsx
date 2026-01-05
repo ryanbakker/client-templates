@@ -1,13 +1,23 @@
-"use client";
-
-import { Briefcase, FileText, BarChart3 } from "lucide-react";
 import { Card } from "@/components/Card";
-import { CardGrid } from "@/components/CardGrid";
+import { ServicesCardGrid } from "@/components/ServicesCardGrid";
 import SectionHeading from "./SectionHeading";
+import { getServices } from "@/lib/queries/getServices";
 
-export default function Services() {
+interface ServiceCard {
+  icon: string;
+  title: string;
+  description: string;
+  includes: [];
+}
+
+export default async function Services() {
+  const data = await getServices();
+
+  console.log("Data ====> ", data);
+
   return (
     <section
+      id="services"
       className="
         section relative
         bg-white
@@ -31,64 +41,28 @@ export default function Services() {
         <SectionHeading
           position="left"
           variant="dark"
-          title="Services Tailored to Your Business"
-          description="Whether you're a sole trader getting organised or a growing company
-          with a busy team, we shape our services around how you work. No
-          generic reports. No one-size-fits-all approach."
+          title={data.heading}
+          description={data.description}
         />
 
         {/* Services Grid */}
-        <CardGrid>
-          {/* Bookkeeping */}
-          <Card
-            title="Bookkeeping & Payroll"
-            description="Keep your day-to-day numbers tidy, accurate, and up to date with reliable bookkeeping support."
-            icon={Briefcase}
-            variant="dark"
-          >
-            <ul className="mt-4 text-sm text-teal-50/70 space-y-1.5">
-              <li>• Monthly or weekly bookkeeping</li>
-              <li>• Bank feed reconciliation</li>
-              <li>• AP / AR tracking</li>
-              <li>• Payroll processing</li>
-              <li>• GST coding and review</li>
-              <li>• Custom reports on request</li>
-            </ul>
-          </Card>
-
-          {/* Tax */}
-          <Card
-            title="Tax & Compliance"
-            description="Stay on top of obligations with calm, predictable support and clear guidance."
-            icon={FileText}
-            variant="dark"
-          >
-            <ul className="mt-4 text-sm text-teal-50/70 space-y-1.5">
-              <li>• GST returns and filing</li>
-              <li>• Income tax returns</li>
-              <li>• End-of-year financial statements</li>
-              <li>• IRD correspondence & liaison</li>
-              <li>• Provisional tax planning</li>
-              <li>• Business structure setup</li>
-            </ul>
-          </Card>
-
-          {/* Advisory */}
-          <Card
-            title="Advisory & Growth"
-            description="Turn financial data into insights that support confident decision-making."
-            icon={BarChart3}
-            variant="dark"
-          >
-            <ul className="mt-4 text-sm text-teal-50/70 space-y-1.5">
-              <li>• Cash flow forecasting</li>
-              <li>• Monthly or quarterly check-ins</li>
-              <li>• Scenario planning for growth</li>
-              <li>• Pricing & margin reviews</li>
-              <li>• Clean, visual reporting dashboards</li>
-            </ul>
-          </Card>
-        </CardGrid>
+        <ServicesCardGrid>
+          {data.cards.map((card: ServiceCard, index: number) => (
+            <Card
+              key={index}
+              title={card.title}
+              description={card.description}
+              icon={card.icon}
+              variant="dark"
+            >
+              <ul className="mt-4 text-sm text-teal-50/70 space-y-1.5 list-disc pl-4">
+                {card.includes.map((feature, index: number) => (
+                  <li key={index}>{feature}</li>
+                ))}
+              </ul>
+            </Card>
+          ))}
+        </ServicesCardGrid>
       </div>
     </section>
   );

@@ -16,17 +16,28 @@ import { Input } from "./ui/input";
 import { SendHorizonal } from "lucide-react";
 import { Textarea } from "./ui/textarea";
 
-function AboutContact() {
+interface AboutContactProps {
+  contact: {
+    heading: string;
+    description: string;
+  };
+  about: {
+    heading: string;
+    description: string;
+  };
+}
+
+function AboutContact({ data }: { data: AboutContactProps }) {
   const [state, handleSubmit] = useForm("a");
   const formRef = useRef<HTMLFormElement | null>(null);
 
   return (
     <div>
-      <section className="section bg-teal-50">
+      <section id="contact" className="section bg-teal-50">
         <div className="container">
           <SectionHeading
-            title="Let's talk about your numbers"
-            description="Whether you're ready to switch accountants or just want to understand your options, we're happy to talk. Share a few details about your business and we'll be in touch within one business day."
+            title={data.contact.heading}
+            description={data.contact.description}
             position="center"
             variant="light"
           />
@@ -34,7 +45,7 @@ function AboutContact() {
           <form
             ref={formRef}
             onSubmit={handleSubmit}
-            className={`relative shadow-xl p-5 rounded-xl bg-white border border-teal-600/20 mt-5`}
+            className={`relative shadow-xl p-5 rounded-xl bg-neutral-50 border border-teal-600/20 mt-5 max-w-2xl mx-auto`}
           >
             <FieldSet>
               <FieldLegend>Contact Details</FieldLegend>
@@ -148,7 +159,7 @@ function AboutContact() {
                 </Field>
 
                 <button
-                  className="w-fit bg-teal-50 text-teal-900 hover:bg-teal-900 font-semibold rounded-full flex flex-row items-center text-sm py-1 px-1.5 transition-all hover:text-teal-50 cursor-pointer"
+                  className="w-fit bg-teal-50 text-teal-900 hover:bg-teal-900 font-semibold rounded-full flex flex-row items-center text-sm py-1 px-1.5 transition-all hover:text-teal-50 cursor-pointer ml-auto"
                   type="submit"
                 >
                   <span className="px-3">Submit</span>
@@ -161,11 +172,11 @@ function AboutContact() {
       </section>
 
       <div className="bg-linear-to-t from-teal-950 to-teal-700">
-        <section className="section">
+        <section id="about" className="section">
           <div className="container">
             <SectionHeading
-              title="Who We Are"
-              description="Clearpath Accounting was created with a simple idea in mind: business owners make better decisions when they actually understand their numbers. We combine solid technical knowledge with clear communication and modern tools to make that happen."
+              title={data.about.heading}
+              description={data.about.description}
               position="left"
               variant="dark"
             />
